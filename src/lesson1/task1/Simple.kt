@@ -92,9 +92,9 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
-    val k = deg * 0.0174533
-    val k1 = min * 0.000290888
-    val k2 = sec * 4.84814e-6
+    val k = deg * PI / 180
+    val k1 = min * PI / (60 * 180)
+    val k2 = sec * PI /(180 * 60 * 60)
     return k + k1 + k2
 }
 
@@ -116,7 +116,12 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = TODO()
+fun thirdDigit(number: Int): Int {
+    val k = number % 1000
+    val k1 = k / 100
+    return k1
+
+}
 
 /**
  * Простая (2 балла)
@@ -125,7 +130,13 @@ fun thirdDigit(number: Int): Int = TODO()
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = TODO()
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
+    val k = hoursDepart * 60
+    val k1 = k + minutesDepart
+    val k2 = hoursArrive * 60
+    val k3 = k2 + minutesArrive
+    return k3 - k1
+}
 
 /**
  * Простая (2 балла)
@@ -136,10 +147,11 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
 
+
 /**
  * Простая (2 балла)
  *
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int = number % 10 * 100 + number / 100 + number % 100 / 10 * 10
