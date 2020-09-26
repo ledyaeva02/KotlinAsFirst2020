@@ -117,13 +117,11 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-    return when {
-        ((kingX == rookX1) || (kingY == rookY1)) && ((kingY != rookY2) && (kingX != rookX2)) -> 1
-        ((kingY == rookY2) || (kingX == rookX2)) && ((kingX != rookX1) && (kingY != rookY1)) -> 2
-        ((kingX != rookX1) && (kingY != rookY1)) && ((kingY != rookY2) && (kingX != rookX2)) -> 0
-        else -> 3
-    }
+): Int = when {
+    (kingX == rookX1 || kingY == rookY1) && (kingY != rookY2 && kingX != rookX2) -> 1
+    (kingY == rookY2 || kingX == rookX2) && (kingX != rookX1 && kingY != rookY1) -> 2
+    kingX != rookX1 && kingY != rookY1 && kingY != rookY2 && kingX != rookX2 -> 0
+    else -> 3
 }
 
 
@@ -161,14 +159,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (b < c || d < a) return -1
-    return when {
-        (c <= b) && (c >= a) && (d >= b) -> b - c
-        (c <= a && b <= d) -> b - a
-        (c <= a) && (d <= b) -> d - a
-        (d <= b && c >= a) -> d - c
-        else -> -1
-    }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    b < c || d < a -> -1
+    c in a..b && d >= b -> b - c
+    c <= a && b <= d -> b - a
+    c <= a && d <= b -> d - a
+    d <= b && c >= a -> d - c
+    else -> -1
 }
 
