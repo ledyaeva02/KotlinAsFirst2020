@@ -98,7 +98,7 @@ fun timeForHalfWay(
     return when {
         k < s1 -> (k / v1)
         k == s1 -> t1
-        (k > s1) && (k <= s1 + s2) -> t1 + (k - s1) / v2
+        k in s1..s1 + s2 -> t1 + (k - s1) / v2
         else -> t1 + t2 + (k - s1 - s2) / v3
     }
 }
