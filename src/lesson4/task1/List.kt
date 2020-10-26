@@ -278,7 +278,7 @@ fun roman(n: Int): String {
     val k1 = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     val result = mutableListOf<String>()
     var number = n
-    var i = 12
+    var i = k.size - 1
     while (number > 0) {
         while (k[i] <= number) {
             result += k1[i]
