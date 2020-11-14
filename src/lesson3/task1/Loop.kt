@@ -72,7 +72,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var result = 0
+    var k = n
+    if (k == 0) return 1
+    while (k != 0) {
+        result += 1
+        k /= 10
+    }
+    return result
+}
+
 
 /**
  * Простая (2 балла)
@@ -232,7 +242,21 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var number = 0
+    var k = 1
+    var square = 0
+    while (number < n) {
+        square = k * k
+        k += 1
+        number += digitNumber(square)
+    }
+    for (i in 0 until number - n) {
+        square /= 10
+    }
+    return square % 10
+}
+
 
 /**
  * Сложная (5 баллов)
@@ -243,4 +267,25 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var number = 1
+    var fib = 0
+    var fib1 = 1
+    var sum = 1
+    var x = 0
+    while (number < n) {
+        sum = fib + fib1
+        fib = fib1
+        fib1 = sum
+        x = sum
+        while (x > 0) {
+            number += 1
+            x /= 10
+        }
+    }
+    if (n == number) return sum % 10
+    for (i in 0 until number - n) {
+        sum /= 10
+    }
+    return sum % 10
+}

@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import java.lang.IllegalArgumentException
+import java.lang.NumberFormatException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -88,6 +91,7 @@ fun dateStrToDigit(str: String): String = TODO()
  */
 fun dateDigitToStr(digital: String): String = TODO()
 
+
 /**
  * Средняя (4 балла)
  *
@@ -127,7 +131,18 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val parts = jumps.split(" ")
+    val result = mutableListOf<String>()
+    return try {
+        for (i in 1 until parts.size step 2) {
+            if ("+" in parts[i]) result.add(parts[i - 1])
+        }
+        result.map { it.toInt() }.maxOrNull() ?: -1
+    } catch (e: NumberFormatException) {
+        -1
+    }
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +164,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.toUpperCase().split(" ")
+    var result = 0
+    if (parts.size <= 1) return -1
+    for (i in parts.indices) {
+        if (parts[i] == parts[i + 1]) return result
+        result += parts[i].length + 1
+    }
+    return -1
+}
+
 
 /**
  * Сложная (6 баллов)

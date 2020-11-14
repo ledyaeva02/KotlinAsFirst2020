@@ -2,8 +2,8 @@
 
 package lesson5.task1
 
-import kotlinx.html.attributes.stringSetDecode
-import kotlin.Pair as Pair1
+import kotlin.Pair
+
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -140,10 +140,10 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val result = mutableListOf<String>()
-    for (i in a.indices) {
-        for (element in b) {
-            if (a[i] == element)
-                result += a[i]
+    for (element in a) {
+        for (element1 in b) {
+            if ((element == element1) and (element !in result))
+                result.add(element)
         }
     }
     return result
@@ -179,7 +179,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair1<String, Double>>): Map<String, Double> {
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val result = mutableMapOf<String, Double>()
     for ((stock) in stockPrices) {
         var k = 0 // счетчик чисел
@@ -197,7 +197,6 @@ fun averageStockPrice(stockPrices: List<Pair1<String, Double>>): Map<String, Dou
     return result
 }
 
-
 /**
  * Средняя (4 балла)
  *
@@ -213,7 +212,7 @@ fun averageStockPrice(stockPrices: List<Pair1<String, Double>>): Map<String, Dou
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair1<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
 
 /**
  * Средняя (3 балла)
@@ -243,8 +242,8 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
     for (letter in list) {
         var k = 0 // счетчик букв
         if (letter !in result) {
-            for (i in list.indices) {
-                if (letter == list[i]) {
+            for (element in list) {
+                if (letter == element) {
                     k += 1
                 }
             }
@@ -321,7 +320,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair1<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val result = mutableMapOf<Int, Int>()
+    for (element in list) {
+        if (element in result) return Pair(result.getOrDefault(element, -1), list.indexOf(element))
+        result[number - element] = list.indexOf(element)
+    }
+    return Pair(-1, -1)
+}
 /**
  * Очень сложная (8 баллов)
  *
@@ -343,4 +349,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair1<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair1<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
