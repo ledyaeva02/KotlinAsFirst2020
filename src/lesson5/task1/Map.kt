@@ -142,7 +142,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val result = mutableListOf<String>()
     for (element in a) {
         for (element1 in b) {
-            if ((element == element1) and (element !in result))
+            if (element == element1 && element !in result)
                 result.add(element)
         }
     }
@@ -182,9 +182,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val result = mutableMapOf<String, Double>()
     for ((stock) in stockPrices) {
-        var k = 0 // счетчик чисел
-        var sum = 0.0 // сумма чисел
         if (stock !in result) {
+            var k = 0
+            var sum = 0.0
             for ((stock1, prices) in stockPrices) {
                 if (stock == stock1) {
                     k += 1
@@ -240,17 +240,11 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
     for (letter in list) {
-        var k = 0 // счетчик букв
         if (letter !in result) {
-            for (element in list) {
-                if (letter == element) {
-                    k += 1
-                }
-            }
-            if (k > 1) result[letter] = k
-        }
+            result[letter] = 1
+        } else result[letter] = result[letter]!! + 1
     }
-    return result
+    return result.filter { it.value > 1 }
 }
 
 /**
