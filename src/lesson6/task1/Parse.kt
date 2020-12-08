@@ -134,15 +134,13 @@ fun bestLongJump(jumps: String): Int = TODO()
 fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
     val result = mutableListOf<String>()
-    return try {
-        for (i in 1 until parts.size step 2) {
-            if ("+" in parts[i]) result.add(parts[i - 1])
-        }
-        result.map { it.toInt() }.maxOrNull() ?: -1
-    } catch (e: NumberFormatException) {
-        -1
+    for (i in 1 until parts.size step 2) {
+        if ("+" in parts[i]) result.add(parts[i - 1])
     }
+    return result.map { it.toIntOrNull() ?: return -1 }.maxOrNull() ?: -1
 }
+
+
 
 /**
  * Сложная (6 баллов)
