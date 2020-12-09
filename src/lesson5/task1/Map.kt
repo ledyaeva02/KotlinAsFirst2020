@@ -138,16 +138,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяюихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val result = mutableListOf<String>()
-    for (element in a) {
-        for (element1 in b) {
-            if (element == element1)
-                result.add(element)
-        }
-    }
-    return result
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
 
 
 /**
@@ -223,10 +214,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
+    var k: Int
     for (letter in list) {
-        if (letter !in result) {
-            result[letter] = 1
-        } else result[letter] = result[letter]!! + 1
+        k = result[letter] ?: 0
+        result[letter] = ++k
     }
     return result.filter { it.value > 1 }
 }
