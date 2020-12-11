@@ -112,9 +112,29 @@ fun sibilants(inputName: String, outputName: String) {
  * 4) Число строк в выходном файле должно быть равно числу строк во входном (в т. ч. пустых)
  *
  */
-fun centerFile(inputName: String, outputName: String) {
-    TODO()
+fun maxLength(inputName: String): Int { // находим длину самой длинной строки
+    var maxLength = 0
+    for (line in File(inputName).readLines()) {
+        val k = line.trim().length
+        if (k > maxLength)
+            maxLength = k
+    }
+    return maxLength
 }
+
+fun centerFile(inputName: String, outputName: String) {
+    val outputStream = File(outputName).bufferedWriter()
+    val k = maxLength(inputName)
+    for (line in File(inputName).readLines()) {
+        val lineLength = line.trim().length
+        for (i in 0 until (k - lineLength) / 2)
+            outputStream.write(" ")
+        outputStream.write(line.trim())
+        outputStream.newLine()
+    }
+    outputStream.close()
+}
+
 
 /**
  * Сложная (20 баллов)
