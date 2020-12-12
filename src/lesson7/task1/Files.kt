@@ -127,8 +127,7 @@ fun centerFile(inputName: String, outputName: String) {
     val k = maxLength(inputName)
     for (line in File(inputName).readLines()) {
         val lineLength = line.trim().length
-        for (i in 0 until (k - lineLength) / 2)
-            outputStream.write(" ")
+        repeat((k - lineLength) / 2) { outputStream.write(" ") }
         outputStream.write(line.trim())
         outputStream.newLine()
     }
