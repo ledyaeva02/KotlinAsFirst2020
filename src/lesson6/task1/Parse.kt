@@ -135,8 +135,8 @@ fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
     val result = mutableListOf<String>()
     for (i in 1 until parts.size step 2) {
-        if (parts[i - 1] < 0.toString()) return -1
         if ("+" in parts[i]) result.add(parts[i - 1])
+        if (parts[i - 1] < 0.toString()) return -1
     }
     return result.map { it.toIntOrNull() ?: return -1 }.maxOrNull() ?: -1
 }
