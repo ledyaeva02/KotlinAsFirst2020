@@ -75,7 +75,9 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    TODO()
+}
 
 
 /**
@@ -301,8 +303,52 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    outputStream.write("<html>")
+    outputStream.write("<body>")
+    outputStream.write("<p>")
+    val k = mutableMapOf("~~" to false, "**" to false, "*" to false)
+    val format = mapOf("~~" to ("<s>" to "</s>"), "**" to ("<b>" to "</b>"), "*" to ("<i>" to "</i>"))
+    var emptyLine = false
+    for (line in File(inputName).readText().replace(Regex("(\\s*$)|(^\\s*(?=\\n))"), "").trim('\n').split("\n")) {
+        if (line.isBlank()) {
+            if (emptyLine) {
+                emptyLine = false
+                outputStream.write("</p>")
+                outputStream.newLine()
+                outputStream.write("<p>")
+            }
+            outputStream.newLine()
+        }
+        emptyLine = true
+        var flag: Boolean = true
+        var lines = line
+        while (flag) {
+            flag = false
+            for (i in k.keys) {
+                if (lines.contains(i)) {
+                    flag = true
+                    if (!k[i]!!) {
+                        lines = lines.replaceFirst(i, (format[i] ?: error("")).first)
+                        k[i] = true
+
+                    } else {
+                        lines = lines.replaceFirst(i, (format[i] ?: error("")).second)
+                        k[i] = false
+                    }
+                }
+            }
+        }
+        outputStream.write(lines)
+        outputStream.newLine()
+    }
+    outputStream.write("</p>")
+    outputStream.write("</body>")
+    outputStream.write("</html>")
+    outputStream.close()
 }
+
+
 
 /**
  * Сложная (23 балла)
