@@ -319,6 +319,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                 outputStream.write("<p>")
             }
             outputStream.newLine()
+            continue
         }
         emptyLine = true
         var flag: Boolean = true
@@ -335,6 +336,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                         lines = lines.replaceFirst(i, (format[i] ?: error("")).second)
                         k[i] = false
                     }
+                    break
                 }
             }
         }
