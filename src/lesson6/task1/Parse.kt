@@ -137,10 +137,10 @@ fun bestHighJump(jumps: String): Int {
     for (i in 1 until parts.size step 2) {
         if ("+" in parts[i]) result.add(parts[i - 1])
         if (parts[i - 1] < 0.toString()) return -1
+        if (Regex("[^-%+0-9]").containsMatchIn(parts[i])) return -1
     }
     return result.map { it.toIntOrNull() ?: return -1 }.maxOrNull() ?: -1
 }
-
 
 
 /**
