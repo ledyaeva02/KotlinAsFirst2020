@@ -331,7 +331,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                     if (!k[i]!!) {
                         lines = lines.replaceFirst(i, (format[i] ?: error("")).first)
                         k[i] = true
-
                     } else {
                         lines = lines.replaceFirst(i, (format[i] ?: error("")).second)
                         k[i] = false
