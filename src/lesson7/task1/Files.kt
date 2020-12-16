@@ -303,50 +303,50 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    val outputStream = File(outputName).bufferedWriter()
-    outputStream.write("<html>")
-    outputStream.write("<body>")
-    outputStream.write("<p>")
-    val k = mutableMapOf("~~" to false, "**" to false, "*" to false)
-    val format = mapOf("~~" to ("<s>" to "</s>"), "**" to ("<b>" to "</b>"), "*" to ("<i>" to "</i>"))
-    var emptyLine = false
-    for (line in File(inputName).readText().replace(Regex("(\\s*$)|(^\\s*(?=\\n))"), "").trim('\n').split("\n")) {
-        if (line.isBlank()) {
-            if (emptyLine) {
-                emptyLine = false
-                outputStream.write("</p>")
-                outputStream.newLine()
-                outputStream.write("<p>")
+    File(outputName).bufferedWriter().use {
+        it.write("<html>")
+        it.write("<body>")
+        it.write("<p>")
+        val k = mutableMapOf("~~" to false, "**" to false, "*" to false)
+        val format = mapOf("~~" to ("<s>" to "</s>"), "**" to ("<b>" to "</b>"), "*" to ("<i>" to "</i>"))
+        var emptyLine = false
+        for (line in File(inputName).readText().replace(Regex("(\\s*$)|(^\\s*(?=\\n))"), "").trim('\n').split("\n")) {
+            if (line.isBlank()) {
+                if (emptyLine) {
+                    emptyLine = false
+                    it.write("</p>")
+                    it.newLine()
+                    it.write("<p>")
+                }
+                it.newLine()
+                continue
             }
-            outputStream.newLine()
-            continue
-        }
-        emptyLine = true
-        var flag: Boolean = true
-        var lines = line
-        while (flag) {
-            flag = false
-            for (i in k.keys) {
-                if (lines.contains(i)) {
-                    flag = true
-                    if (!k[i]!!) {
-                        lines = lines.replaceFirst(i, (format[i] ?: error("")).first)
-                        k[i] = true
-                    } else {
-                        lines = lines.replaceFirst(i, (format[i] ?: error("")).second)
-                        k[i] = false
+            emptyLine = true
+            var flag: Boolean = true
+            var lines = line
+            while (flag) {
+                flag = false
+                for (i in k.keys) {
+                    if (lines.contains(i)) {
+                        flag = true
+                        if (!k[i]!!) {
+                            lines = lines.replaceFirst(i, (format[i] ?: error("")).first)
+                            k[i] = true
+                        } else {
+                            lines = lines.replaceFirst(i, (format[i] ?: error("")).second)
+                            k[i] = false
+                        }
+                        break
                     }
-                    break
                 }
             }
+            it.write(lines)
+            it.newLine()
         }
-        outputStream.write(lines)
-        outputStream.newLine()
+        it.write("</p>")
+        it.write("</body>")
+        it.write("</html>")
     }
-    outputStream.write("</p>")
-    outputStream.write("</body>")
-    outputStream.write("</html>")
-    outputStream.close()
 }
 
 
